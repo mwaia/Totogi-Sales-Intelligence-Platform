@@ -11,3 +11,5 @@ sse-starlette==2.2.1
 beautifulsoup4==4.13.3
 duckduckgo-search==7.5.1
 python-multipart==0.0.20
+pdfplumber==0.11.4
+openpyxl==3.1.5

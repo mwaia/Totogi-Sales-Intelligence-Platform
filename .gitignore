@@ -6,5 +6,6 @@ node_modules/
 dist/
 .DS_Store
 backend/data/
+backend/data/uploads/
 .vite/
 *.egg-info/

@@ -45,6 +45,25 @@ class Account(Base):
     plans = relationship("AccountPlan", back_populates="account", cascade="all, delete-orphan")
     news_items = relationship("NewsItem", back_populates="account", cascade="all, delete-orphan")
     conversations = relationship("ChatConversation", back_populates="account", cascade="all, delete-orphan")
+    documents = relationship("AccountDocument", back_populates="account", cascade="all, delete-orphan")
+    intelligence_briefs = relationship("IntelligenceBrief", back_populates="account", cascade="all, delete-orphan")
+
+
+class AccountDocument(Base):
+    __tablename__ = "account_documents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    account_id = Column(Integer, ForeignKey("accounts.id"), nullable=False)
+    filename = Column(String(500), nullable=False)
+    original_filename = Column(String(500), nullable=False)
+    file_path = Column(String(1000), nullable=False)
+    file_size = Column(Integer, nullable=False)
+    mime_type = Column(String(200), default="")
+    extracted_text = Column(Text, default="")
+    uploaded_by_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=utcnow)
+
+    account = relationship("Account", back_populates="documents")
 
 
 class AccountPlan(Base):
@@ -105,3 +124,18 @@ class ChatMessage(Base):
     created_at = Column(DateTime, default=utcnow)
 
     conversation = relationship("ChatConversation", back_populates="messages")
+
+
+class IntelligenceBrief(Base):
+    __tablename__ = "intelligence_briefs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    account_id = Column(Integer, ForeignKey("accounts.id"), nullable=False)
+    summary = Column(Text, nullable=False)
+    key_highlights = Column(JSON, default=list)
+    risk_signals = Column(JSON, default=list)
+    opportunity_signals = Column(JSON, default=list)
+    generated_at = Column(DateTime, default=utcnow)
+    created_by_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+
+    account = relationship("Account", back_populates="intelligence_briefs")

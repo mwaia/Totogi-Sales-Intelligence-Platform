@@ -115,6 +115,41 @@ class NewsItemResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
+# --- Documents ---
+
+class DocumentResponse(BaseModel):
+    id: int
+    account_id: int
+    original_filename: str
+    file_size: int
+    mime_type: str
+    has_extracted_text: bool
+    uploaded_by_id: Optional[int]
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+# --- Intelligence ---
+
+class IntelligenceBriefResponse(BaseModel):
+    id: int
+    account_id: int
+    summary: str
+    key_highlights: list[dict]
+    risk_signals: list[dict]
+    opportunity_signals: list[dict]
+    generated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class IntelligenceRefreshResponse(BaseModel):
+    news_count: int
+    brief_id: Optional[int]
+    message: str
+
+
 # --- Chat ---
 
 class ConversationCreate(BaseModel):

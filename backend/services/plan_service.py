@@ -85,6 +85,125 @@ BSS Magic is a wedge, not a big-bang deployment. Find the single best starting p
 7. **Risk Factors** — What could make this beachhead fail? How do we mitigate?
 
 Remember: Without a clear scoped starting point, the customer sees an overwhelming project and freezes.""",
+
+    "executive_summary": """Create a customer-facing Executive Summary / One-Pager for {company_name}.
+
+This is a document the sales rep can share directly with a prospect. Structure:
+
+1. **The Challenge** — 2-3 sentences on the specific business challenge this customer faces in their BSS/telecom operations
+2. **Why Now** — Why the timing is critical (market forces, competitive pressure, technology shifts)
+3. **The BSS Magic Approach** — How our ontology-based approach specifically addresses their challenge (3-4 bullet points, customer-value-focused, NOT feature-focused)
+4. **Expected Outcomes** — 3-4 quantified or estimated business outcomes
+5. **Recommended Next Step** — One clear call-to-action (diagnostic session, architecture review, etc.)
+
+IMPORTANT: This is customer-facing. No internal jargon, no "selling" language. Diagnostic, professional, executive-level tone. Lead with their problem, not our solution.""",
+
+    "roi_business_case": """Build an ROI Business Case for BSS Magic deployment at {company_name}.
+
+Structure:
+1. **Current State Costs** — Estimate operational costs of their current BSS approach (manual processes, system integration overhead, data inconsistency costs, failed automation attempts)
+2. **Cost of Inaction** — What happens if they don't modernize? Competitive risk, regulatory risk, technical debt accumulation
+3. **Investment Framework** — Phased investment model (beachhead to expansion to transformation)
+4. **ROI Projections** — Conservative, moderate, and aggressive scenarios with estimated payback period
+5. **Value Drivers** — Specific operational improvements and their estimated financial impact
+6. **Competitive Benchmark** — How similar-sized telcos have approached this investment
+7. **Risk Mitigation** — How the beachhead approach de-risks the investment
+
+Use realistic industry benchmarks. BSS transformation typically yields 15-30% operational cost reduction. Be conservative in estimates.""",
+
+    "battle_card": """Create a Competitive Battle Card for the {company_name} deal.
+
+This is an internal-only document for the sales team. Be direct and tactical.
+
+Structure:
+1. **Competitive Landscape** — Who are we likely competing against at this account? (Amdocs, Ericsson, Nokia, CSG, Netcracker, in-house, horizontal AI platforms)
+2. **For Each Competitor**:
+   - Their likely pitch / positioning
+   - Their strengths at this account
+   - Their weaknesses / gaps
+   - Our differentiation (ontology vs. their approach)
+   - Trap questions to ask in competitive situations
+   - Red flags that indicate they're entrenched
+3. **Objection Handling** — Top 5 likely objections and specific responses
+4. **Proof Points** — Reference stories, technical validations, or analogies that resonate
+5. **Win Strategy** — If we're behind, how do we reframe? If we're ahead, how do we protect the lead?
+
+Remember: We don't win on features. We win by reframing the conversation from "which BSS vendor" to "do you need an ontology or not?" """,
+
+    "talk_track": """Develop a Talk Track and Discovery Questions for {company_name}.
+
+Create a structured conversation guide for the next meeting.
+
+Structure:
+1. **Opening (2 minutes)** — How to open the conversation. Diagnostic question, not a pitch. Something that reveals a pain point.
+2. **Discovery Questions (15 minutes)** — 8-10 carefully sequenced questions that:
+   - Start broad (business priorities, challenges)
+   - Narrow to BSS/operational pain
+   - Identify semantic failure points (where AI/automation breaks down)
+   - Reveal budget ownership and decision timeline
+   - Uncover competitor relationships
+3. **Moment of Belief Setup (5 minutes)** — The specific analogy, example, or mini-demo that shifts their thinking from "product evaluation" to "we have an architecture problem"
+4. **Objection-Ready Responses** — Pre-loaded responses for the 3 most likely pushbacks for this specific account
+5. **Close / Next Step** — How to end with a concrete next action (not "we'll follow up" — something specific)
+
+Each question should have a follow-up probe and notes on what the answer reveals about deal viability.""",
+
+    "email_sequences": """Create Email Sequences for {company_name}.
+
+Generate three separate email sequences:
+
+## Sequence 1: Cold Outreach (3 emails)
+- Email 1: Initial contact. Diagnostic-first, not a pitch. Reference something specific about their company. One provocative question. Under 100 words.
+- Email 2: Follow-up (3 days later). Share a relevant insight or data point. No attachment. Under 80 words.
+- Email 3: Break-up email (5 days later). Light touch, leave the door open. Under 60 words.
+
+## Sequence 2: Post-Meeting Follow-Up (3 emails)
+- Email 1: Same-day recap. Summarize what was discussed, confirm next steps.
+- Email 2: Value-add (3 days later). Share something relevant to their specific situation.
+- Email 3: Advance the deal (7 days later). Propose specific next step.
+
+## Sequence 3: Champion Nurture (4 emails)
+- Email 1: Enable the champion. Give them language to sell internally.
+- Email 2: Arm with proof points. Data, case studies, ROI frameworks.
+- Email 3: Stakeholder expansion. Help them bring in other decision-makers.
+- Email 4: Executive access. Help champion arrange executive-level conversation.
+
+For each email: provide subject line, body text, and call-to-action. Keep all emails professional but not corporate. No buzzwords.""",
+
+    "win_loss_analysis": """Create a Win/Loss Analysis Template for {company_name}.
+
+Structure this as a framework for analyzing the deal outcome (to be filled in as the deal progresses or after conclusion):
+
+1. **Deal Overview** — Key facts: timeline, deal size estimate, competitors involved, decision-makers
+2. **Win/Loss Factors Checklist**:
+   - Did we reach the executive layer? Y/N
+   - Was there an identified internal champion? Y/N / How strong?
+   - Did the customer understand the ontology premise? Y/N
+   - Was there a clear beachhead identified? Y/N
+   - Were we competing on the right battlefield (architecture vs. features)? Y/N
+   - Was there a budgeted initiative tied to our solution? Y/N
+3. **Anti-Pattern Assessment** — For each of the 6 loss patterns from the brainlift, assess whether it applied
+4. **Competitive Analysis** — What did the competitor do well/poorly?
+5. **Key Moments** — What were the 2-3 pivotal moments in the deal?
+6. **Lessons Learned** — What would we do differently?
+7. **Follow-Up Actions** — Even if lost: re-engagement strategy. If won: expansion strategy.""",
+
+    "qbr_brief": """Prepare a QBR (Quarterly Business Review) Preparation Brief for {company_name}.
+
+This document prepares the sales rep for their internal QBR presentation about this account.
+
+Structure:
+1. **Account Health Score** — Overall assessment: Green/Yellow/Red with justification
+2. **Quarter Summary** — Key activities, meetings held, progress made, obstacles encountered
+3. **Pipeline Impact** — Deal stage, estimated value, probability, expected close date, what changed this quarter
+4. **Stakeholder Status** — For each known contact: relationship health, engagement level, concerns
+5. **Strategic Priorities Next Quarter** — Top 3 specific actions with owners and deadlines
+6. **Competitive Threats** — Any new competitive developments or threats
+7. **Resource Requests** — What support does the rep need? (Executive engagement, technical resources, marketing support)
+8. **Risk Register** — Top 3 risks to this deal with mitigation plans
+9. **Success Metrics** — What does "good" look like by end of next quarter?
+
+Be specific and actionable. This will be presented to sales leadership.""",
 }
 
 
@@ -103,6 +222,13 @@ PLAN_TITLES = {
     "stakeholder_map": "Stakeholder Map",
     "deal_strategy": "Deal Strategy",
     "beachhead": "Beachhead Identification",
+    "executive_summary": "Executive Summary",
+    "roi_business_case": "ROI Business Case",
+    "battle_card": "Competitive Battle Card",
+    "talk_track": "Talk Track & Discovery Questions",
+    "email_sequences": "Email Sequences",
+    "win_loss_analysis": "Win/Loss Analysis",
+    "qbr_brief": "QBR Preparation Brief",
 }
 
 

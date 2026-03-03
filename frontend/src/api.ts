@@ -112,6 +112,57 @@ export const news = {
     }),
 };
 
+// Documents
+export const documents = {
+  list: (accountId: number) =>
+    request<import("./types").AccountDocument[]>(`/accounts/${accountId}/documents`),
+  upload: async (accountId: number, file: File) => {
+    const token = getToken();
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch(`${API_BASE}/accounts/${accountId}/documents`, {
+      method: "POST",
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.detail || `Upload failed: ${res.status}`);
+    }
+    return res.json() as Promise<import("./types").AccountDocument>;
+  },
+  download: (docId: number) => {
+    const token = getToken();
+    return fetch(`${API_BASE}/documents/${docId}/download`, {
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+  },
+  delete: (docId: number) =>
+    request<void>(`/documents/${docId}`, { method: "DELETE" }),
+};
+
+// Intelligence
+export const intelligence = {
+  get: (accountId: number) =>
+    request<{
+      brief: import("./types").IntelligenceBrief | null;
+      items: import("./types").NewsItem[];
+    }>(`/accounts/${accountId}/intelligence`),
+  refresh: (accountId: number) =>
+    request<{ news_count: number; brief_id: number | null; message: string }>(
+      `/accounts/${accountId}/intelligence/refresh`,
+      { method: "POST" }
+    ),
+  listBriefs: (accountId: number) =>
+    request<import("./types").IntelligenceBrief[]>(
+      `/accounts/${accountId}/intelligence/briefs`
+    ),
+};
+
 // Chat
 export const chat = {
   listConversations: () =>

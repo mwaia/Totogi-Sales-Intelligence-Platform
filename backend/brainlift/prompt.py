@@ -3,7 +3,7 @@ import json
 from backend.brainlift.loader import extract_brainlift_text
 
 
-def build_system_prompt(account_context: dict | None = None) -> list[dict]:
+def build_system_prompt(account_context: dict | None = None, document_context: str = "", intelligence_context: str = "") -> list[dict]:
     """Build system prompt blocks with cache_control for prompt caching.
 
     The brainlift block is marked with cache_control so Anthropic caches it
@@ -43,6 +43,22 @@ def build_system_prompt(account_context: dict | None = None) -> list[dict]:
             {
                 "type": "text",
                 "text": f"## Current Account Context\n\n{_format_account_context(account_context)}",
+            }
+        )
+
+    if document_context:
+        blocks.append(
+            {
+                "type": "text",
+                "text": f"## Account Documents\n\n{document_context}",
+            }
+        )
+
+    if intelligence_context:
+        blocks.append(
+            {
+                "type": "text",
+                "text": f"## Account Intelligence\n\n{intelligence_context}",
             }
         )
 

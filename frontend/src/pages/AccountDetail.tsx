@@ -5,9 +5,10 @@ import type { Account } from "../types";
 import { STATUS_LABELS, STATUS_COLORS, STATUS_OPTIONS } from "../types";
 import ChatPanel from "../components/ChatPanel";
 import PlanSection from "../components/PlanSection";
-import NewsSection from "../components/NewsSection";
+import DocumentSection from "../components/DocumentSection";
+import IntelligenceSection from "../components/IntelligenceSection";
 
-type Tab = "overview" | "plans" | "news" | "chat";
+type Tab = "overview" | "documents" | "intelligence" | "plans" | "chat";
 
 export default function AccountDetail() {
   const { id } = useParams<{ id: string }>();
@@ -58,8 +59,9 @@ export default function AccountDetail() {
 
   const tabs: { key: Tab; label: string }[] = [
     { key: "overview", label: "Overview" },
-    { key: "plans", label: "Plans" },
-    { key: "news", label: "News" },
+    { key: "documents", label: "Documents" },
+    { key: "intelligence", label: "Intelligence" },
+    { key: "plans", label: "Artifacts" },
     { key: "chat", label: "Chat" },
   ];
 
@@ -198,8 +200,9 @@ export default function AccountDetail() {
         </div>
       )}
 
+      {tab === "documents" && <DocumentSection accountId={account.id} />}
+      {tab === "intelligence" && <IntelligenceSection accountId={account.id} />}
       {tab === "plans" && <PlanSection accountId={account.id} />}
-      {tab === "news" && <NewsSection accountId={account.id} />}
       {tab === "chat" && <ChatPanel accountId={account.id} accountName={account.company_name} />}
     </div>
   );

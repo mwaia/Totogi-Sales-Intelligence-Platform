@@ -6,7 +6,9 @@ from sse_starlette.sse import EventSourceResponse
 
 from backend.auth import get_current_user
 from backend.database import get_db
-from backend.models import Account, ChatConversation, ChatMessage, User
+from backend.models import Account, AccountDocument, ChatConversation, ChatMessage, User
+from backend.services.document_service import get_account_document_context
+from backend.services.intelligence_service import get_intelligence_context
 from backend.schemas import ChatMessageRequest, ChatMessageResponse, ConversationCreate, ConversationResponse
 from backend.services.ai_service import stream_chat, TOOLS
 
@@ -128,10 +130,18 @@ async def send_message(
                 "key_contacts": account.key_contacts,
             }
 
+    # Get document and intelligence context if account-linked
+    document_context = ""
+    intelligence_ctx = ""
+    if conv.account_id:
+        docs = db.query(AccountDocument).filter(AccountDocument.account_id == conv.account_id).all()
+        document_context = get_account_document_context(docs)
+        intelligence_ctx = get_intelligence_context(conv.account_id, db)
+
     async def event_generator():
         full_content = ""
         try:
-            async for event in stream_chat(history, account_context, TOOLS):
+            async for event in stream_chat(history, account_context, TOOLS, document_context=document_context, intelligence_context=intelligence_ctx):
                 if event["type"] == "text":
                     full_content += event["content"]
                     yield {"event": "text", "data": json.dumps({"content": event["content"]})}
