@@ -1,10 +1,261 @@
 @import "tailwindcss";
 
+/* ===== Totogi Brand Design Tokens ===== */
+:root {
+  --totogi-purple: #802DC8;
+  --totogi-navy: #001C3D;
+  --totogi-pink: #EF50FF;
+  --totogi-coral: #FF4F59;
+  --totogi-lilac: #ECE1F0;
+  --totogi-white: #FFFFFF;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #1a1a2e;
+}
+
+h1, h2, h3 {
+  font-family: 'Space Grotesk', 'Poppins', sans-serif;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+/* Thinking dots */
+.thinking-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--totogi-purple);
+  animation: pulse-dot 1.4s infinite ease-in-out;
+}
+.thinking-dot:nth-child(1) { animation-delay: 0s; }
+.thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Streaming cursor */
+.streaming-cursor::after {
+  content: '|';
+  animation: blink 0.8s infinite;
+  color: var(--totogi-purple);
+  font-weight: 300;
+}
+
+/* ===== Totogi Brand Gradient Utilities ===== */
+.bg-totogi-gradient {
+  background: linear-gradient(135deg, var(--totogi-purple), var(--totogi-navy));
+}
+
+.bg-totogi-gradient-light {
+  background: linear-gradient(135deg, var(--totogi-lilac), var(--totogi-white));
+}
+
+.text-totogi-purple { color: var(--totogi-purple); }
+.bg-totogi-purple { background-color: var(--totogi-purple); }
+.border-totogi-purple { border-color: var(--totogi-purple); }
+.text-totogi-navy { color: var(--totogi-navy); }
+.bg-totogi-navy { background-color: var(--totogi-navy); }
+.text-totogi-pink { color: var(--totogi-pink); }
+.text-totogi-coral { color: var(--totogi-coral); }
+.bg-totogi-lilac { background-color: var(--totogi-lilac); }
+
+/* ===== Enhanced Prose for AI Content ===== */
+.prose-ai {
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.prose-ai h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--totogi-navy);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--totogi-lilac);
+}
+
+.prose-ai h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--totogi-navy);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-ai h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 1.25rem;
+  margin-bottom: 0.4rem;
+}
+
+.prose-ai p {
+  color: #4b5563;
+  line-height: 1.75;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-ai ul, .prose-ai ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.prose-ai li {
+  color: #4b5563;
+  line-height: 1.65;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.prose-ai li::marker {
+  color: var(--totogi-purple);
+}
+
+.prose-ai strong {
+  color: var(--totogi-navy);
+  font-weight: 600;
+}
+
+.prose-ai blockquote {
+  border-left: 3px solid var(--totogi-purple);
+  padding-left: 1rem;
+  margin-left: 0;
+  color: #6b7280;
+  font-style: italic;
+  background: #faf8fc;
+  padding: 0.75rem 1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.prose-ai code {
+  background-color: var(--totogi-lilac);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+  color: var(--totogi-purple);
+}
+
+.prose-ai pre {
+  background-color: var(--totogi-navy);
+  color: #e5e7eb;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+
+.prose-ai pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.prose-ai table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.prose-ai th {
+  background-color: var(--totogi-lilac);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 2px solid #d6c8de;
+  color: var(--totogi-navy);
+}
+
+.prose-ai td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #f3f0f5;
+  color: #4b5563;
+}
+
+.prose-ai tr:hover td {
+  background-color: #faf8fc;
+}
+
+.prose-ai hr {
+  border: none;
+  border-top: 1px solid var(--totogi-lilac);
+  margin: 1.5rem 0;
+}
+
+.prose-ai a {
+  color: var(--totogi-purple);
+  text-decoration: underline;
+  text-decoration-color: #c9a5e0;
+  text-underline-offset: 2px;
+}
+
+.prose-ai a:hover {
+  color: #6b22a8;
+}
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--totogi-navy);
+  color: white;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px -5px rgba(0,28,61,0.3);
+  z-index: 50;
+  animation: slideUp 0.3s ease-out;
 }

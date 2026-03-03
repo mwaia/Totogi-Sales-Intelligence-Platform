@@ -1,38 +1,77 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const NAV_ITEMS = [
-  { path: "/", label: "Dashboard", icon: "grid" },
-  { path: "/accounts", label: "Accounts", icon: "building" },
-  { path: "/chat", label: "Chat", icon: "chat" },
+  { path: "/", label: "Dashboard", icon: "dashboard" },
+  { path: "/accounts", label: "Accounts", icon: "accounts" },
+  { path: "/chat", label: "Intelligence Chat", icon: "chat" },
 ];
 
-const ICON_MAP: Record<string, string> = {
-  grid: "M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z",
-  building: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
-  chat: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
-};
+function NavIcon({ icon, className }: { icon: string; className?: string }) {
+  switch (icon) {
+    case "dashboard":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
+        </svg>
+      );
+    case "accounts":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+      );
+    case "chat":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
 
-export default function Layout({
-  children,
-  onLogout,
-  userName,
-}: {
-  children: React.ReactNode;
-  onLogout: () => void;
-  userName: string;
-}) {
+function getInitials(name: string): string {
+  return name.split(" ").map((p) => p[0]).join("").toUpperCase().slice(0, 2);
+}
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const displayName = user?.full_name || user?.username || "User";
+  const userRole = user?.role || "user";
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
-        <div className="p-6 border-b border-gray-200">
-          <h1 className="text-lg font-bold text-gray-900">Sales Intelligence</h1>
-          <p className="text-xs text-gray-500 mt-1">BSS Magic AI Platform</p>
+    <div className="flex h-screen" style={{ backgroundColor: '#f7f5f9' }}>
+      {/* Sidebar - Totogi Navy */}
+      <aside className="w-64 flex flex-col" style={{ background: 'linear-gradient(180deg, #001C3D 0%, #0a1628 100%)' }}>
+        {/* Brand */}
+        <div className="px-5 py-5">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#802DC8' }}>
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-[15px] font-semibold text-white leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                Sales Intelligence
+              </h1>
+              <p className="text-[11px] mt-0.5" style={{ color: '#9b8ab5' }}>Totogi / BSS Magic</p>
+            </div>
+          </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        {/* Nav */}
+        <nav className="flex-1 px-3 mt-2 space-y-1">
           {NAV_ITEMS.map((item) => {
             const isActive =
               item.path === "/"
@@ -42,36 +81,55 @@ export default function Layout({
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm font-medium transition-all duration-150 ${
                   isActive
-                    ? "bg-blue-50 text-blue-700"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                    ? "text-white"
+                    : "hover:text-white"
                 }`}
+                style={
+                  isActive
+                    ? { backgroundColor: 'rgba(128, 45, 200, 0.25)', color: '#d4a5f5', borderLeft: '3px solid #802DC8' }
+                    : { color: '#8a9bb5', borderLeft: '3px solid transparent' }
+                }
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={ICON_MAP[item.icon]} />
-                </svg>
+                <NavIcon icon={item.icon} className="w-5 h-5 flex-shrink-0" />
                 {item.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-200">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">{userName}</span>
+        {/* Divider */}
+        <div className="mx-4" style={{ borderTop: '1px solid rgba(128, 45, 200, 0.2)' }} />
+
+        {/* User */}
+        <div className="px-4 py-4">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#802DC8' }}>
+              <span className="text-xs font-semibold text-white">{getInitials(displayName)}</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-white truncate">{displayName}</p>
+              <span className="inline-block mt-0.5 px-2 py-0.5 text-[10px] font-medium rounded-full capitalize" style={{ backgroundColor: 'rgba(128, 45, 200, 0.2)', color: '#c9a5e0' }}>
+                {userRole}
+              </span>
+            </div>
             <button
-              onClick={onLogout}
-              className="text-sm text-gray-400 hover:text-gray-600"
+              onClick={handleLogout}
+              title="Log out"
+              className="p-1.5 rounded-lg transition-colors"
+              style={{ color: '#6b7fa0' }}
             >
-              Logout
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
             </button>
           </div>
         </div>
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-auto">{children}</main>
+      <main className="flex-1 overflow-y-auto" style={{ backgroundColor: '#f7f5f9' }}>{children}</main>
     </div>
   );
 }

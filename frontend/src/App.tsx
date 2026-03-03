@@ -25,7 +25,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Layout onLogout={logout} userName={user?.full_name || ""}>
+      <Layout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/accounts" element={<AccountList />} />

@@ -60,16 +60,16 @@ export default function AccountNew() {
   };
 
   return (
-    <div className="p-8 max-w-2xl">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Add Account</h1>
+    <div className="min-h-screen p-8 max-w-2xl mx-auto" style={{ backgroundColor: '#f7f5f9' }}>
+      <h1 className="text-2xl font-bold text-[#001C3D] mb-6" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Add Account</h1>
 
       {error && (
-        <div className="text-sm text-red-600 bg-red-50 px-4 py-3 rounded-lg mb-4">{error}</div>
+        <div className="text-sm text-[#FF4F59] bg-red-50 border border-red-100 px-4 py-3 rounded-xl mb-4 animate-fade-in">{error}</div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
-          <h2 className="font-semibold text-gray-900">Company Info</h2>
+        <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
+          <h2 className="font-semibold text-[#001C3D]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Company Info</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
@@ -79,7 +79,7 @@ export default function AccountNew() {
                 value={form.company_name}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
               />
             </div>
             <div>
@@ -89,7 +89,7 @@ export default function AccountNew() {
                 value={form.industry}
                 onChange={handleChange}
                 placeholder="e.g. Telecommunications"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
               />
             </div>
             <div>
@@ -98,7 +98,7 @@ export default function AccountNew() {
                 name="country"
                 value={form.country}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
               />
             </div>
             <div>
@@ -107,7 +107,7 @@ export default function AccountNew() {
                 name="website"
                 value={form.website}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
               />
             </div>
             <div>
@@ -116,7 +116,7 @@ export default function AccountNew() {
                 name="current_status"
                 value={form.current_status}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
               >
                 {STATUS_OPTIONS.map((s) => (
                   <option key={s} value={s}>{STATUS_LABELS[s]}</option>
@@ -130,7 +130,7 @@ export default function AccountNew() {
                 value={form.employee_count}
                 onChange={handleChange}
                 placeholder="e.g. 10,000-50,000"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
               />
             </div>
             <div>
@@ -140,7 +140,7 @@ export default function AccountNew() {
                 value={form.annual_revenue}
                 onChange={handleChange}
                 placeholder="e.g. $1B-$5B"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
               />
             </div>
           </div>
@@ -152,19 +152,19 @@ export default function AccountNew() {
               value={form.notes}
               onChange={handleChange}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
             />
           </div>
         </div>
 
         {/* Contacts */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+        <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-gray-900">Key Contacts</h2>
+            <h2 className="font-semibold text-[#001C3D]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Key Contacts</h2>
             <button
               type="button"
               onClick={addContact}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+              className="text-sm text-[#802DC8] hover:text-[#6b22a8] font-medium"
             >
               + Add Contact
             </button>
@@ -187,25 +187,25 @@ export default function AccountNew() {
                   value={contact.name}
                   onChange={(e) => updateContact(i, "name", e.target.value)}
                   placeholder="Name"
-                  className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
                 <input
                   value={contact.title}
                   onChange={(e) => updateContact(i, "title", e.target.value)}
                   placeholder="Title"
-                  className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
                 <input
                   value={contact.email}
                   onChange={(e) => updateContact(i, "email", e.target.value)}
                   placeholder="Email"
-                  className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
                 <input
                   value={contact.phone}
                   onChange={(e) => updateContact(i, "phone", e.target.value)}
                   placeholder="Phone"
-                  className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
               <label className="flex items-center gap-2 text-sm text-gray-600">
@@ -225,14 +225,14 @@ export default function AccountNew() {
           <button
             type="submit"
             disabled={saving}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50"
+            className="px-6 py-2.5 bg-[#802DC8] text-white rounded-xl font-semibold hover:bg-[#6b22a8] disabled:opacity-50 shadow-sm transition-colors"
           >
             {saving ? "Creating..." : "Create Account"}
           </button>
           <button
             type="button"
             onClick={() => navigate("/accounts")}
-            className="px-6 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50"
+            className="px-6 py-2 border border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50"
           >
             Cancel
           </button>
