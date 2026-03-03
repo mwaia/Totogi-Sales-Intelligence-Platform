@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta, timezone
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -40,9 +42,10 @@ def get_intelligence(
         .first()
     )
 
+    six_months_ago = datetime.now(timezone.utc) - timedelta(days=180)
     items = (
         db.query(NewsItem)
-        .filter(NewsItem.account_id == account_id)
+        .filter(NewsItem.account_id == account_id, NewsItem.scraped_at >= six_months_ago)
         .order_by(NewsItem.scraped_at.desc())
         .all()
     )

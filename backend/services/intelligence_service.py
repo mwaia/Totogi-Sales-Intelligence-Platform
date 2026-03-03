@@ -1,13 +1,14 @@
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import anthropic
 from sqlalchemy.orm import Session
 
 from backend.config import settings
-from backend.models import Account, NewsItem, IntelligenceBrief
+from backend.models import Account, AccountDocument, NewsItem, IntelligenceBrief
 from backend.tools.web_search import search_web
 from backend.services.news_service import refresh_account_news
+from backend.services.document_service import get_account_document_context
 
 
 INTELLIGENCE_SEARCHES = {
@@ -39,12 +40,23 @@ async def refresh_intelligence(account_id: int, db: Session, user_id: int | None
 
     company = account.company_name
     year = datetime.now().year
+    six_months_ago = datetime.now(timezone.utc) - timedelta(days=180)
+
+    # Step 0: Purge intelligence items older than 6 months
+    db.query(NewsItem).filter(
+        NewsItem.account_id == account_id,
+        NewsItem.scraped_at < six_months_ago,
+    ).delete()
+    db.commit()
 
     # Step 1: Run existing news refresh
     base_results = await refresh_account_news(account_id, db)
 
     # Step 2: Run categorized intelligence searches
-    existing_urls = {n.url for n in db.query(NewsItem).filter(NewsItem.account_id == account_id).all()}
+    existing_urls = {n.url for n in db.query(NewsItem).filter(
+        NewsItem.account_id == account_id,
+        NewsItem.scraped_at >= six_months_ago,
+    ).all()}
     new_items = []
 
     for category, queries in INTELLIGENCE_SEARCHES.items():
@@ -90,26 +102,42 @@ async def refresh_intelligence(account_id: int, db: Session, user_id: int | None
 
 async def _generate_intelligence_brief(account_id: int, db: Session, user_id: int | None) -> int | None:
     """Use Claude to generate a structured intelligence brief."""
+    six_months_ago = datetime.now(timezone.utc) - timedelta(days=180)
+
     items = (
         db.query(NewsItem)
-        .filter(NewsItem.account_id == account_id)
+        .filter(NewsItem.account_id == account_id, NewsItem.scraped_at >= six_months_ago)
         .order_by(NewsItem.scraped_at.desc())
         .limit(50)
         .all()
     )
 
-    if not items:
+    # Get uploaded documents for this account
+    docs = db.query(AccountDocument).filter(AccountDocument.account_id == account_id).all()
+    document_context = get_account_document_context(docs)
+
+    if not items and not document_context:
         return None
 
     account = db.query(Account).filter(Account.id == account_id).first()
 
     items_text = "\n".join([
         f"- [{item.category}] {item.title}: {item.summary}" for item in items
-    ])
+    ]) if items else "(No recent web intelligence found)"
 
-    prompt = f"""Analyze the following intelligence items for {account.company_name} and produce a structured intelligence brief.
+    doc_section = ""
+    if document_context:
+        doc_section = f"""
+## Uploaded Account Documents (call transcripts, meeting notes, internal docs)
+{document_context}
 
-## Raw Intelligence Items:
+IMPORTANT: The uploaded documents above contain critical first-hand information (call transcripts, meeting notes, etc.) from direct interactions with this account. Prioritize insights from these documents — they are more reliable than web search results.
+
+"""
+
+    prompt = f"""Analyze ALL of the following intelligence for {account.company_name} and produce a structured intelligence brief.
+{doc_section}
+## Web Intelligence Items (last 6 months):
 {items_text}
 
 Respond ONLY with valid JSON in this exact format:

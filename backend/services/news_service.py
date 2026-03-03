@@ -15,10 +15,11 @@ async def refresh_account_news(account_id: int, db: Session) -> list[dict]:
         return []
 
     company = account.company_name
+    year = datetime.now().year
     results = []
 
-    # Web search for general news
-    web_results = await search_web(f"{company} telecom news", 5)
+    # Web search for general news (biased toward current year)
+    web_results = await search_web(f"{company} telecom news {year}", 5)
     try:
         web_data = json.loads(web_results)
         if isinstance(web_data, list):
@@ -35,7 +36,7 @@ async def refresh_account_news(account_id: int, db: Session) -> list[dict]:
         pass
 
     # Search for press releases
-    pr_results = await search_web(f"{company} press release announcement", 3)
+    pr_results = await search_web(f"{company} press release announcement {year}", 3)
     try:
         pr_data = json.loads(pr_results)
         if isinstance(pr_data, list):
