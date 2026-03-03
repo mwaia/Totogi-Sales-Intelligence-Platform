@@ -8,7 +8,7 @@ from backend.config import settings
 from backend.models import Account, AccountDocument, NewsItem, IntelligenceBrief
 from backend.tools.web_search import search_web
 from backend.services.news_service import refresh_account_news
-from backend.services.document_service import get_account_document_context
+from backend.services.document_service import get_activity_context
 
 
 INTELLIGENCE_SEARCHES = {
@@ -112,9 +112,9 @@ async def _generate_intelligence_brief(account_id: int, db: Session, user_id: in
         .all()
     )
 
-    # Get uploaded documents for this account
+    # Get activity documents only (call transcripts, notes) — not knowledge base
     docs = db.query(AccountDocument).filter(AccountDocument.account_id == account_id).all()
-    document_context = get_account_document_context(docs)
+    document_context = get_activity_context(docs)
 
     if not items and not document_context:
         return None

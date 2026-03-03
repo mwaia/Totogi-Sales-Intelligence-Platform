@@ -7,7 +7,7 @@ from sse_starlette.sse import EventSourceResponse
 from backend.auth import get_current_user
 from backend.database import get_db
 from backend.models import Account, AccountDocument, AccountPlan, User
-from backend.services.document_service import get_account_document_context
+from backend.services.document_service import get_knowledge_context, get_activity_context
 from backend.services.intelligence_service import get_intelligence_context
 from backend.schemas import PlanGenerateRequest, PlanResponse
 from backend.services.ai_service import stream_plan
@@ -44,13 +44,14 @@ async def generate_plan(
 
     # Get document and intelligence context
     docs = db.query(AccountDocument).filter(AccountDocument.account_id == account_id).all()
-    document_context = get_account_document_context(docs)
+    knowledge_ctx = get_knowledge_context(docs)
+    activity_ctx = get_activity_context(docs)
     intelligence_ctx = get_intelligence_context(account_id, db)
 
     async def event_generator():
         full_content = ""
         try:
-            async for event in stream_plan(account_context, body.plan_type, prompt, document_context=document_context, intelligence_context=intelligence_ctx):
+            async for event in stream_plan(account_context, body.plan_type, prompt, intelligence_context=intelligence_ctx, knowledge_context=knowledge_ctx, activity_context=activity_ctx):
                 if event["type"] == "text":
                     full_content += event["content"]
                     yield {"event": "text", "data": json.dumps({"content": event["content"]})}

@@ -12,6 +12,15 @@ from backend.routers import auth_router, accounts, chat, plans, news, documents,
 async def lifespan(app: FastAPI):
     # Create all tables on startup
     Base.metadata.create_all(bind=engine)
+    # Migrate: add doc_type column if it doesn't exist
+    with engine.connect() as conn:
+        try:
+            conn.execute(__import__("sqlalchemy").text(
+                "ALTER TABLE account_documents ADD COLUMN doc_type VARCHAR(50) DEFAULT 'activity'"
+            ))
+            conn.commit()
+        except Exception:
+            pass  # Column already exists
     yield
 
 

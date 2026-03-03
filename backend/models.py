@@ -60,6 +60,7 @@ class AccountDocument(Base):
     file_size = Column(Integer, nullable=False)
     mime_type = Column(String(200), default="")
     extracted_text = Column(Text, default="")
+    doc_type = Column(String(50), default="activity")  # "knowledge" or "activity"
     uploaded_by_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     created_at = Column(DateTime, default=utcnow)
 

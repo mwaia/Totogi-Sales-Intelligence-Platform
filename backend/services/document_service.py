@@ -100,7 +100,7 @@ def _extract_csv(content: bytes) -> str:
 
 
 def get_account_document_context(documents) -> str:
-    """Build a context string from a list of AccountDocument objects."""
+    """Build a context string from a list of AccountDocument objects (all types)."""
     if not documents:
         return ""
 
@@ -120,5 +120,51 @@ def get_account_document_context(documents) -> str:
             total_chars += len(text)
         else:
             parts.append(f"\n- {doc.original_filename} (binary file, no text extracted)")
+
+    return "\n".join(parts)
+
+
+def get_knowledge_context(documents) -> str:
+    """Build context from knowledge base documents (BrainLift, Account BrainLift)."""
+    knowledge_docs = [d for d in documents if getattr(d, 'doc_type', 'activity') == 'knowledge']
+    if not knowledge_docs:
+        return ""
+
+    parts = ["## Account Knowledge Base"]
+    total_chars = 0
+
+    for doc in knowledge_docs:
+        if doc.extracted_text:
+            text = doc.extracted_text
+            if len(text) > MAX_DOC_CHARS:
+                text = text[:MAX_DOC_CHARS] + "\n\n[Document truncated...]"
+            if total_chars + len(text) > MAX_TOTAL_CHARS:
+                continue
+            parts.append(f"\n### {doc.original_filename}")
+            parts.append(text)
+            total_chars += len(text)
+
+    return "\n".join(parts)
+
+
+def get_activity_context(documents) -> str:
+    """Build context from activity documents (call transcripts, emails, meeting notes)."""
+    activity_docs = [d for d in documents if getattr(d, 'doc_type', 'activity') == 'activity']
+    if not activity_docs:
+        return ""
+
+    parts = ["## Recent Activity (calls, emails, notes)"]
+    total_chars = 0
+
+    for doc in activity_docs:
+        if doc.extracted_text:
+            text = doc.extracted_text
+            if len(text) > MAX_DOC_CHARS:
+                text = text[:MAX_DOC_CHARS] + "\n\n[Document truncated...]"
+            if total_chars + len(text) > MAX_TOTAL_CHARS:
+                continue
+            parts.append(f"\n### {doc.original_filename}")
+            parts.append(text)
+            total_chars += len(text)
 
     return "\n".join(parts)

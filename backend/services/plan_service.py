@@ -204,6 +204,44 @@ Structure:
 9. **Success Metrics** — What does "good" look like by end of next quarter?
 
 Be specific and actionable. This will be presented to sales leadership.""",
+
+    "expansion_plan": """Create an Account Expansion Plan for {company_name}.
+
+This is a land-and-expand strategy document. The assumption is we have (or will have) a beachhead — now map the expansion path.
+
+Structure:
+1. **Current Footprint Assessment** — What system/use case are we in (or entering) today? What value has been proven?
+2. **Expansion Vectors** — Map 3-5 adjacent systems or use cases we can expand into. For each:
+   - What it is and why it's a natural next step
+   - Which stakeholder owns it
+   - Estimated timeline to pursue
+   - Dependencies (what needs to be true first)
+3. **Land-and-Expand Timeline** — Quarter-by-quarter expansion roadmap from beachhead through full platform adoption
+4. **Revenue Growth Model** — How deal size grows at each expansion stage (beachhead → adjacent → platform)
+5. **Expansion Triggers** — What signals indicate the account is ready for the next expansion wave? (Success metrics hit, budget cycle, champion promotion, etc.)
+6. **Risk to Expansion** — What could prevent expansion? Competitor entrenchment in adjacent systems, executive turnover, budget freezes
+7. **Executive Engagement Strategy** — How to elevate the relationship from tactical (beachhead) to strategic (platform partner)
+
+Ground this in the BSS Magic methodology. The ontology's power is that it connects systems — each expansion proves the ontology's value in a new domain.""",
+
+    "next_steps": """Generate prioritized Next Steps for the {company_name} deal.
+
+Based on the current deal stage, account context, recent interactions (call transcripts, meeting notes), and intelligence data, produce a concrete action plan.
+
+Structure:
+
+For each recommended next step (provide 3-5):
+1. **Action** — What specifically needs to happen (be concrete: "Schedule architecture review with CTO", not "Follow up")
+2. **Owner** — Who should do this (rep, SE, executive sponsor, champion)
+3. **Timeline** — When this should happen (e.g., "Within 48 hours", "Before end of week", "Next budget cycle")
+4. **Rationale** — Why this action matters now — connect it to something specific from the account context, a recent conversation, or an intelligence signal
+5. **Success Indicator** — How we'll know this step was successful
+
+Also include:
+- **Blockers** — Anything that needs to be resolved before these steps can happen
+- **What NOT to Do** — Common mistakes or anti-patterns for this deal stage that the rep should avoid
+
+Prioritize actions by urgency and impact. The first step should be the single most important thing to do right now.""",
 }
 
 
@@ -229,6 +267,8 @@ PLAN_TITLES = {
     "email_sequences": "Email Sequences",
     "win_loss_analysis": "Win/Loss Analysis",
     "qbr_brief": "QBR Preparation Brief",
+    "expansion_plan": "Account Expansion Plan",
+    "next_steps": "Next Steps Recommendation",
 }
 
 

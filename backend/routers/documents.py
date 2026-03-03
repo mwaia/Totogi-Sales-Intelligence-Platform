@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, Query, UploadFile, File
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
@@ -18,6 +18,7 @@ MAX_FILE_SIZE = 50 * 1024 * 1024  # 50 MB
 async def upload_document(
     account_id: int,
     file: UploadFile = File(...),
+    doc_type: str = Query("activity"),
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
@@ -40,6 +41,7 @@ async def upload_document(
         file_size=len(content),
         mime_type=file.content_type or "",
         extracted_text=extracted,
+        doc_type=doc_type if doc_type in ("knowledge", "activity") else "activity",
         uploaded_by_id=user.id,
     )
     db.add(doc)
@@ -108,6 +110,7 @@ def _to_response(doc: AccountDocument) -> dict:
         "file_size": doc.file_size,
         "mime_type": doc.mime_type,
         "has_extracted_text": bool(doc.extracted_text),
+        "doc_type": doc.doc_type or "activity",
         "uploaded_by_id": doc.uploaded_by_id,
         "created_at": doc.created_at,
     }

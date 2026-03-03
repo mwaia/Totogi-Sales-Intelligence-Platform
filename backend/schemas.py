@@ -124,6 +124,7 @@ class DocumentResponse(BaseModel):
     file_size: int
     mime_type: str
     has_extracted_text: bool
+    doc_type: str
     uploaded_by_id: Optional[int]
     created_at: datetime
 

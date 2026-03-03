@@ -18,6 +18,8 @@ const PLAN_TYPE_DESCRIPTIONS: Record<PlanType, string> = {
   email_sequences: "Multi-touch outreach sequences for key personas",
   win_loss_analysis: "Analyze factors behind deal outcomes",
   qbr_brief: "Quarterly review preparation with key metrics and updates",
+  expansion_plan: "Land-and-expand strategy from beachhead to platform",
+  next_steps: "Prioritized actions based on deal stage and recent activity",
 };
 
 export default function PlanSection({ accountId }: { accountId: number }) {

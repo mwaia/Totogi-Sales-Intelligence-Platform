@@ -60,6 +60,7 @@ export interface AccountDocument {
   file_size: number;
   mime_type: string;
   has_extracted_text: boolean;
+  doc_type: "knowledge" | "activity";
   uploaded_by_id: number | null;
   created_at: string;
 }
@@ -116,7 +117,9 @@ export type PlanType =
   | "talk_track"
   | "email_sequences"
   | "win_loss_analysis"
-  | "qbr_brief";
+  | "qbr_brief"
+  | "expansion_plan"
+  | "next_steps";
 
 export const PLAN_TYPE_LABELS: Record<PlanType, string> = {
   full: "Full Account Plan",
@@ -132,6 +135,8 @@ export const PLAN_TYPE_LABELS: Record<PlanType, string> = {
   email_sequences: "Email Sequences",
   win_loss_analysis: "Win/Loss Analysis",
   qbr_brief: "QBR Prep Brief",
+  expansion_plan: "Account Expansion Plan",
+  next_steps: "Next Steps",
 };
 
 export interface ArtifactCategory {
@@ -142,11 +147,11 @@ export interface ArtifactCategory {
 export const ARTIFACT_CATEGORIES: ArtifactCategory[] = [
   {
     label: "Strategy",
-    types: ["full", "use_cases", "stakeholder_map", "deal_strategy", "beachhead"],
+    types: ["full", "use_cases", "stakeholder_map", "deal_strategy", "beachhead", "expansion_plan"],
   },
   {
     label: "Sales Materials",
-    types: ["executive_summary", "messaging", "roi_business_case", "battle_card", "talk_track", "email_sequences"],
+    types: ["executive_summary", "messaging", "roi_business_case", "battle_card", "talk_track", "email_sequences", "next_steps"],
   },
   {
     label: "Review & Analysis",

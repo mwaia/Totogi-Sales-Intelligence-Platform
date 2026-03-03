@@ -116,11 +116,11 @@ export const news = {
 export const documents = {
   list: (accountId: number) =>
     request<import("./types").AccountDocument[]>(`/accounts/${accountId}/documents`),
-  upload: async (accountId: number, file: File) => {
+  upload: async (accountId: number, file: File, docType: "knowledge" | "activity" = "activity") => {
     const token = getToken();
     const formData = new FormData();
     formData.append("file", file);
-    const res = await fetch(`${API_BASE}/accounts/${accountId}/documents`, {
+    const res = await fetch(`${API_BASE}/accounts/${accountId}/documents?doc_type=${docType}`, {
       method: "POST",
       headers: {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
