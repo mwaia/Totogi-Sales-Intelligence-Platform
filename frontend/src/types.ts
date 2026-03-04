@@ -119,6 +119,7 @@ export type PlanType =
   | "win_loss_analysis"
   | "qbr_brief"
   | "expansion_plan"
+  | "land_expand"
   | "next_steps";
 
 export const PLAN_TYPE_LABELS: Record<PlanType, string> = {
@@ -136,6 +137,7 @@ export const PLAN_TYPE_LABELS: Record<PlanType, string> = {
   win_loss_analysis: "Win/Loss Analysis",
   qbr_brief: "QBR Prep Brief",
   expansion_plan: "Account Expansion Plan",
+  land_expand: "Land & Expand Strategy",
   next_steps: "Next Steps",
 };
 
@@ -147,7 +149,7 @@ export interface ArtifactCategory {
 export const ARTIFACT_CATEGORIES: ArtifactCategory[] = [
   {
     label: "Strategy",
-    types: ["full", "use_cases", "stakeholder_map", "deal_strategy", "beachhead", "expansion_plan"],
+    types: ["full", "use_cases", "stakeholder_map", "deal_strategy", "beachhead", "expansion_plan", "land_expand"],
   },
   {
     label: "Sales Materials",

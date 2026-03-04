@@ -224,6 +224,72 @@ Structure:
 
 Ground this in the BSS Magic methodology. The ontology's power is that it connects systems — each expansion proves the ontology's value in a new domain.""",
 
+    "land_expand": """Create a Land & Expand Strategy with Visual Diagram for {company_name}.
+
+This artifact is a concise, visually-driven strategy document that maps the expansion journey from initial beachhead to full platform adoption. It should be easy to present in a meeting or share with leadership.
+
+Structure:
+
+## 1. Land & Expand Diagram
+
+Create an ASCII/text-based visual diagram showing the expansion journey. Use a clear visual format like:
+
+```
+LAND (Beachhead)                    EXPAND                           PLATFORM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ┌─────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+  │  BEACHHEAD  │────▶│  EXPAND #1   │────▶│  EXPAND #2   │────▶│  STRATEGIC   │
+  │             │     │              │     │              │     │  PLATFORM    │
+  │ [System]    │     │ [System]     │     │ [System]     │     │             │
+  │ [Use Case]  │     │ [Use Case]   │     │ [Use Case]   │     │ Full Ontol. │
+  │ $XXK        │     │ +$XXK        │     │ +$XXK        │     │ $X.XM+      │
+  └─────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
+       Q1-Q2               Q3-Q4               Q1-Q2               Q3+
+       ▲                   ▲                   ▲                   ▲
+       │                   │                   │                   │
+   [Trigger]           [Trigger]           [Trigger]           [Trigger]
+```
+
+Replace the placeholders with ACTUAL systems, use cases, dollar values, and timelines specific to {company_name}. Make the diagram as detailed and account-specific as possible.
+
+## 2. Beachhead Definition
+- The specific system, use case, and pain point we're entering with
+- Why this is the right starting point (technical feasibility + business visibility + champion access)
+- Success criteria that unlock the first expansion
+
+## 3. Expansion Sequence
+For each expansion wave (3-4 waves):
+- **Target system/domain** and why it's the natural next step
+- **Connection to previous wave** — how the ontology's value compounds
+- **Stakeholder** who owns this domain
+- **Trigger event** that signals readiness
+- **Estimated deal value increment**
+
+## 4. Value Waterfall Diagram
+Show how deal value grows at each stage:
+
+```
+Beachhead:    ████████░░░░░░░░░░░░░░░░░  $XXK
+Expand #1:    ████████████████░░░░░░░░░░  $XXK  (cumulative: $XXK)
+Expand #2:    ████████████████████████░░  $X.XM (cumulative: $X.XM)
+Platform:     ████████████████████████████ $X.XM+ (cumulative: $X.XM+)
+```
+
+## 5. Risk Gates
+At each expansion transition, what could block progress? One line per gate:
+- Gate 1 (Land → Expand #1): [specific risk]
+- Gate 2 (Expand #1 → #2): [specific risk]
+- Gate 3 (Expand → Platform): [specific risk]
+
+## 6. 90-Day Quick Reference
+A simple table: What to do in the next 90 days to secure the land and set up the first expansion.
+
+| Week | Action | Owner | Purpose |
+|------|--------|-------|---------|
+
+Keep this artifact VISUAL and CONCISE. It should fit on 2-3 pages when printed. Use the diagrams to tell the story — minimize dense paragraphs. This is a document a rep presents to their VP of Sales, not a novel.""",
+
     "next_steps": """Generate prioritized Next Steps for the {company_name} deal.
 
 Based on the current deal stage, account context, recent interactions (call transcripts, meeting notes), and intelligence data, produce a concrete action plan.
@@ -268,6 +334,7 @@ PLAN_TITLES = {
     "win_loss_analysis": "Win/Loss Analysis",
     "qbr_brief": "QBR Preparation Brief",
     "expansion_plan": "Account Expansion Plan",
+    "land_expand": "Land & Expand Strategy",
     "next_steps": "Next Steps Recommendation",
 }
 

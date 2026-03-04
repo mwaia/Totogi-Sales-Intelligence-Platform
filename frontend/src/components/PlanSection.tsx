@@ -19,6 +19,7 @@ const PLAN_TYPE_DESCRIPTIONS: Record<PlanType, string> = {
   win_loss_analysis: "Analyze factors behind deal outcomes",
   qbr_brief: "Quarterly review preparation with key metrics and updates",
   expansion_plan: "Land-and-expand strategy from beachhead to platform",
+  land_expand: "Visual land & expand diagram with value waterfall",
   next_steps: "Prioritized actions based on deal stage and recent activity",
 };
 
