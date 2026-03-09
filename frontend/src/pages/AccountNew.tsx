@@ -16,6 +16,7 @@ export default function AccountNew() {
     website: "",
     employee_count: "",
     annual_revenue: "",
+    deal_value: "",
     current_status: "prospect",
     notes: "",
   });
@@ -140,6 +141,17 @@ export default function AccountNew() {
                 value={form.annual_revenue}
                 onChange={handleChange}
                 placeholder="e.g. $1B-$5B"
+                className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Deal Value ($)</label>
+              <input
+                name="deal_value"
+                type="number"
+                value={form.deal_value}
+                onChange={handleChange}
+                placeholder="e.g. 500000"
                 className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] outline-none"
               />
             </div>

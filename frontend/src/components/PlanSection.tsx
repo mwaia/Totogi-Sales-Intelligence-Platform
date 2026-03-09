@@ -21,6 +21,7 @@ const PLAN_TYPE_DESCRIPTIONS: Record<PlanType, string> = {
   expansion_plan: "Land-and-expand strategy from beachhead to platform",
   land_expand: "Visual land & expand diagram with value waterfall",
   next_steps: "Prioritized actions based on deal stage and recent activity",
+  meeting_prep: "One-page brief to review before a customer meeting",
 };
 
 export default function PlanSection({ accountId }: { accountId: number }) {
@@ -267,7 +268,7 @@ export default function PlanSection({ accountId }: { accountId: number }) {
               </div>
             )}
           </div>
-          <div className="p-6">
+          <div className="p-8 max-w-4xl mx-auto">
             <div className="prose-ai">
               <ReactMarkdown>{genContent}</ReactMarkdown>
               {generating && <span className="streaming-cursor" />}
@@ -315,7 +316,7 @@ export default function PlanSection({ accountId }: { accountId: number }) {
               </button>
             </div>
           </div>
-          <div className="p-6">
+          <div className="p-8 max-w-4xl mx-auto">
             <div className="prose-ai">
               <ReactMarkdown>{selectedPlan.content}</ReactMarkdown>
             </div>

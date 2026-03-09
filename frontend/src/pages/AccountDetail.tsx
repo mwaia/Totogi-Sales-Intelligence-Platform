@@ -7,8 +7,12 @@ import ChatPanel from "../components/ChatPanel";
 import PlanSection from "../components/PlanSection";
 import DocumentSection from "../components/DocumentSection";
 import IntelligenceSection from "../components/IntelligenceSection";
+import ResearchSection from "../components/ResearchSection";
+import TaskSection from "../components/TaskSection";
+import NoteSection from "../components/NoteSection";
+import DashboardSection from "../components/DashboardSection";
 
-type Tab = "overview" | "documents" | "intelligence" | "plans" | "chat";
+type Tab = "overview" | "documents" | "intelligence" | "research" | "plans" | "tasks" | "notes" | "chat";
 
 const TAB_ICONS: Record<Tab, JSX.Element> = {
   overview: (
@@ -26,9 +30,24 @@ const TAB_ICONS: Record<Tab, JSX.Element> = {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
     </svg>
   ),
+  research: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  ),
   plans: (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+  ),
+  tasks: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+    </svg>
+  ),
+  notes: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
     </svg>
   ),
   chat: (
@@ -99,7 +118,10 @@ export default function AccountDetail() {
     { key: "overview", label: "Overview" },
     { key: "documents", label: "Documents" },
     { key: "intelligence", label: "Intelligence" },
+    { key: "research", label: "Research" },
     { key: "plans", label: "Artifacts" },
+    { key: "tasks", label: "Tasks" },
+    { key: "notes", label: "Notes" },
     { key: "chat", label: "Chat" },
   ];
 
@@ -177,7 +199,7 @@ export default function AccountDetail() {
         {/* Tab Content */}
         {tab === "overview" && (
           <div className="space-y-6">
-            {editing ? (
+            {editing && (
               <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
                 <h2 className="font-bold text-[#001C3D] text-lg" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   Edit Account
@@ -237,6 +259,16 @@ export default function AccountDetail() {
                       className="w-full px-3 py-2 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] transition-all"
                     />
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Deal Value ($)</label>
+                    <input
+                      type="number"
+                      value={editForm.deal_value || ""}
+                      onChange={(e) => setEditForm({ ...editForm, deal_value: Number(e.target.value) || 0 })}
+                      placeholder="0"
+                      className="w-full px-3 py-2 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[#802DC8]/30 focus:border-[#802DC8] transition-all"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
@@ -265,114 +297,17 @@ export default function AccountDetail() {
                   </button>
                 </div>
               </div>
-            ) : (
-              <div className="bg-white rounded-2xl shadow-sm p-6 border-l-4 border-l-[#802DC8]">
-                <h2
-                  className="font-bold text-[#001C3D] text-lg mb-4"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                >
-                  Company Info
-                </h2>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  {account.industry && (
-                    <div>
-                      <span className="text-gray-400 text-xs uppercase tracking-wide font-medium">Industry</span>
-                      <p className="text-[#001C3D] font-medium mt-0.5">{account.industry}</p>
-                    </div>
-                  )}
-                  {account.country && (
-                    <div>
-                      <span className="text-gray-400 text-xs uppercase tracking-wide font-medium">Country</span>
-                      <p className="text-[#001C3D] font-medium mt-0.5">{account.country}</p>
-                    </div>
-                  )}
-                  {account.website && (
-                    <div>
-                      <span className="text-gray-400 text-xs uppercase tracking-wide font-medium">Website</span>
-                      <p className="mt-0.5">
-                        <a
-                          href={account.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#802DC8] hover:underline font-medium"
-                        >
-                          {account.website}
-                        </a>
-                      </p>
-                    </div>
-                  )}
-                  {account.employee_count && (
-                    <div>
-                      <span className="text-gray-400 text-xs uppercase tracking-wide font-medium">Employees</span>
-                      <p className="text-[#001C3D] font-medium mt-0.5">{account.employee_count}</p>
-                    </div>
-                  )}
-                  {account.annual_revenue && (
-                    <div>
-                      <span className="text-gray-400 text-xs uppercase tracking-wide font-medium">Revenue</span>
-                      <p className="text-[#001C3D] font-medium mt-0.5">{account.annual_revenue}</p>
-                    </div>
-                  )}
-                </div>
-                {account.notes && (
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <span className="text-gray-400 text-xs uppercase tracking-wide font-medium">Notes</span>
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap mt-1">{account.notes}</p>
-                  </div>
-                )}
-              </div>
             )}
-
-            {/* Key Contacts */}
-            <div className="bg-white rounded-2xl shadow-sm p-6">
-              <h2
-                className="font-bold text-[#001C3D] text-lg mb-4"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
-                Key Contacts
-              </h2>
-              {account.key_contacts.length === 0 ? (
-                <div className="text-center py-8">
-                  <div className="w-12 h-12 rounded-full bg-[#ECE1F0] flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-6 h-6 text-[#802DC8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-gray-400">No contacts added yet</p>
-                </div>
-              ) : (
-                <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
-                  {account.key_contacts.map((c, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-[#f7f5f9] hover:bg-[#ECE1F0]/60 transition-colors"
-                    >
-                      <div className="w-10 h-10 rounded-full bg-[#802DC8] text-white font-semibold flex items-center justify-center text-sm shrink-0">
-                        {c.name.charAt(0).toUpperCase()}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold text-[#001C3D] text-sm truncate">{c.name}</span>
-                          {c.is_champion && (
-                            <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
-                              Champion
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-xs text-gray-500 truncate">{c.title}</p>
-                        {c.email && <p className="text-xs text-gray-400 truncate">{c.email}</p>}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {!editing && <DashboardSection account={account} onNavigate={(t) => setTab(t as Tab)} />}
           </div>
         )}
 
         {tab === "documents" && <DocumentSection accountId={account.id} />}
         {tab === "intelligence" && <IntelligenceSection accountId={account.id} />}
+        {tab === "research" && <ResearchSection accountId={account.id} />}
         {tab === "plans" && <PlanSection accountId={account.id} />}
+        {tab === "tasks" && <TaskSection accountId={account.id} />}
+        {tab === "notes" && <NoteSection accountId={account.id} />}
         {tab === "chat" && <ChatPanel accountId={account.id} accountName={account.company_name} />}
       </div>
     </div>

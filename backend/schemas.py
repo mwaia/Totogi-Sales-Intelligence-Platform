@@ -25,6 +25,15 @@ class UserResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
+# --- Users ---
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+    full_name: str
+    role: str = "rep"
+
+
 # --- Contacts ---
 
 class ContactSchema(BaseModel):
@@ -46,6 +55,7 @@ class AccountCreate(BaseModel):
     employee_count: str = ""
     annual_revenue: str = ""
     current_status: str = "prospect"
+    deal_value: float = 0.0
     notes: str = ""
     key_contacts: list[ContactSchema] = []
 
@@ -58,6 +68,7 @@ class AccountUpdate(BaseModel):
     employee_count: Optional[str] = None
     annual_revenue: Optional[str] = None
     current_status: Optional[str] = None
+    deal_value: Optional[float] = None
     notes: Optional[str] = None
     key_contacts: Optional[list[ContactSchema]] = None
 
@@ -71,6 +82,7 @@ class AccountResponse(BaseModel):
     employee_count: str
     annual_revenue: str
     current_status: str
+    deal_value: float
     notes: str
     key_contacts: list[ContactSchema]
     owner_id: Optional[int]
@@ -149,6 +161,154 @@ class IntelligenceRefreshResponse(BaseModel):
     news_count: int
     brief_id: Optional[int]
     message: str
+
+
+# --- BrainLift ---
+
+class BrainLiftResponse(BaseModel):
+    id: int
+    account_id: int
+    original_filename: str
+    file_size: int
+    mime_type: str
+    has_extracted_text: bool
+    text_preview: str
+    uploaded_by_id: Optional[int]
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+# --- Deals ---
+
+class DealCreate(BaseModel):
+    title: str
+    description: str = ""
+    current_status: str = "prospect"
+    deal_value: float = 0.0
+
+
+class DealUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    current_status: Optional[str] = None
+    deal_value: Optional[float] = None
+
+
+class DealResponse(BaseModel):
+    id: int
+    account_id: int
+    title: str
+    description: str
+    current_status: str
+    deal_value: float
+    created_by_id: Optional[int]
+    created_by_name: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    task_count: int = 0
+    open_task_count: int = 0
+
+    model_config = {"from_attributes": True}
+
+
+# --- Tasks ---
+
+class TaskCreate(BaseModel):
+    deal_id: int
+    title: str
+    description: str = ""
+    due_date: Optional[datetime] = None
+    status: str = "todo"
+    priority: str = "medium"
+    assigned_to_id: Optional[int] = None
+
+
+class TaskUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    due_date: Optional[datetime] = None
+    status: Optional[str] = None
+    priority: Optional[str] = None
+    assigned_to_id: Optional[int] = None
+
+
+class TaskResponse(BaseModel):
+    id: int
+    deal_id: int
+    account_id: int
+    title: str
+    description: str
+    due_date: Optional[datetime]
+    status: str
+    priority: str
+    assigned_to_id: Optional[int]
+    assigned_to_name: Optional[str] = None
+    created_by_id: Optional[int]
+    created_by_name: Optional[str] = None
+    deal_title: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+# --- Notes ---
+
+class NoteCreate(BaseModel):
+    content: str
+
+
+class NoteResponse(BaseModel):
+    id: int
+    account_id: int
+    content: str
+    created_by_id: Optional[int]
+    created_by_name: Optional[str] = None
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+# --- Research ---
+
+class ResearchRequest(BaseModel):
+    query: str
+    report_type: str = "deep_research"  # "deep_research" or "web_search"
+
+
+class ResearchReportResponse(BaseModel):
+    id: int
+    account_id: int
+    query: str
+    report_type: str
+    content: str
+    citations: list[dict]
+    model_used: str
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class SimilaritySearchRequest(BaseModel):
+    query: str
+    top_k: int = 5
+
+
+class SimilaritySearchResult(BaseModel):
+    content: str
+    score: float
+    document_id: int
+    original_filename: str
+    chunk_index: int
+
+
+class EmbeddingStatusResponse(BaseModel):
+    document_id: int
+    original_filename: str
+    chunk_count: int
+    is_embedded: bool
 
 
 # --- Chat ---

@@ -9,25 +9,26 @@ from backend.models import Account, AccountDocument, NewsItem, IntelligenceBrief
 from backend.tools.web_search import search_web
 from backend.services.news_service import refresh_account_news
 from backend.services.document_service import get_activity_context
+from backend.brainlift.loader import extract_brainlift_text
 
 
 INTELLIGENCE_SEARCHES = {
     "financial_update": [
-        "{company} financial results earnings revenue",
-        "{company} quarterly report annual results",
+        "{company} financial results earnings revenue {year}",
+        "{company} quarterly report annual results {year}",
     ],
     "executive_change": [
-        "{company} CEO CTO CIO appointment executive",
-        "{company} leadership change new hire",
+        "{company} CEO CTO CIO appointment executive {year}",
+        "{company} leadership change new hire {year}",
     ],
     "competitor_activity": [
-        "{company} competitor BSS billing system vendor",
+        "{company} competitor BSS billing system vendor {year}",
     ],
     "industry_trend": [
         "{company} 5G AI telecom transformation {year}",
     ],
     "technology_initiative": [
-        "{company} digital cloud migration modernization",
+        "{company} digital cloud migration modernization {year}",
     ],
 }
 
@@ -135,10 +136,29 @@ IMPORTANT: The uploaded documents above contain critical first-hand information 
 
 """
 
-    prompt = f"""Analyze ALL of the following intelligence for {account.company_name} and produce a structured intelligence brief.
+    today = datetime.now().strftime("%B %d, %Y")
+    brainlift = extract_brainlift_text()
+
+    prompt = f"""You are the BSS Magic Sales Intelligence AI. Your analysis must be grounded in the BSS Magic sales methodology.
+
+## BSS Magic Sales BrainLift (Company DNA)
+{brainlift}
+
+## Your Task
+Analyze the following intelligence for {account.company_name} and produce a structured intelligence brief. Frame ALL insights through the lens of BSS Magic's sales methodology — identify signals relevant to our value proposition, beachhead opportunities, champion profiles, and competitive positioning against horizontal AI and legacy BSS vendors.
+
+**CRITICAL: Today's date is {today}. Only include information from the last 12 months (since {datetime.now().year - 1}). Discard anything older. Prioritize the last 3 months.**
+
 {doc_section}
-## Web Intelligence Items (last 6 months):
+## Web Intelligence Items (recent):
 {items_text}
+
+When generating signals, specifically look for:
+- Opportunities where BSS Magic's three-layer ontology solves problems their current stack can't
+- Signs of "semantic bankruptcy" — data lake investments that can't drive operational AI
+- Executive changes that could create new champions or blockers
+- Competitive vendor mentions (CloudSense, Amdocs, Netcracker, Ericsson, Nokia) and positioning opportunities
+- Digital transformation initiatives where BSS Magic's approach is differentiated
 
 Respond ONLY with valid JSON in this exact format:
 {{

@@ -3,11 +3,14 @@ import json
 from duckduckgo_search import DDGS
 
 
-async def search_web(query: str, num_results: int = 5) -> str:
-    """Search the web using DuckDuckGo and return results as JSON string."""
+async def search_web(query: str, num_results: int = 5, timelimit: str = "y") -> str:
+    """Search the web using DuckDuckGo and return results as JSON string.
+
+    timelimit: "d" = past day, "w" = past week, "m" = past month, "y" = past year, None = no limit
+    """
     try:
         with DDGS() as ddgs:
-            results = list(ddgs.text(query, max_results=min(num_results, 10)))
+            results = list(ddgs.text(query, max_results=min(num_results, 10), timelimit=timelimit))
 
         formatted = []
         for r in results:

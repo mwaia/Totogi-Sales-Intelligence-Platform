@@ -290,6 +290,51 @@ A simple table: What to do in the next 90 days to secure the land and set up the
 
 Keep this artifact VISUAL and CONCISE. It should fit on 2-3 pages when printed. Use the diagrams to tell the story — minimize dense paragraphs. This is a document a rep presents to their VP of Sales, not a novel.""",
 
+    "meeting_prep": """Generate a Meeting Prep Brief for an upcoming meeting with {company_name}.
+
+This is a one-page executive brief that a sales rep reviews in the 15 minutes before walking into a customer meeting. It must be scannable, actionable, and comprehensive.
+
+Structure:
+
+## 1. Meeting At-a-Glance
+A 3-line summary: Who are we meeting? What stage is the deal? What's the #1 objective for this meeting?
+
+## 2. Account Snapshot
+- Company: name, industry, size, status
+- Deal value and stage
+- Days in current stage
+- Key risk signals from intelligence
+
+## 3. Key People (who's in the room)
+For each known contact:
+- Name, title, role in decision
+- Are they a champion, blocker, or neutral?
+- What they care about (based on BrainLift and past interactions)
+- Last interaction summary
+
+## 4. Recent Context (last 30 days)
+- What happened in the last meeting/call? Key takeaways from notes and transcripts
+- Any new intelligence signals (executive changes, financial news, competitor moves)?
+- Open action items from last interaction — what did we commit to?
+
+## 5. Talking Points
+3-5 specific talking points for this meeting:
+- What to lead with
+- Questions to ask (diagnostic, not feature-focused)
+- What to listen for (buying signals, concerns, competitive mentions)
+
+## 6. Landmines to Avoid
+- Topics or areas where we're exposed
+- Competitive vulnerabilities
+- Unresolved concerns from past interactions
+
+## 7. Meeting Objective & Exit Criteria
+- What specific outcome do we want from this meeting?
+- What's the "next step" we're trying to secure?
+- What signals tell us the meeting was successful?
+
+Keep this CONCISE and SCANNABLE. Use bullet points, bold key phrases. A rep should be able to absorb this in 5 minutes. This is not a strategy doc — it's a prep sheet.""",
+
     "next_steps": """Generate prioritized Next Steps for the {company_name} deal.
 
 Based on the current deal stage, account context, recent interactions (call transcripts, meeting notes), and intelligence data, produce a concrete action plan.
@@ -336,6 +381,7 @@ PLAN_TITLES = {
     "expansion_plan": "Account Expansion Plan",
     "land_expand": "Land & Expand Strategy",
     "next_steps": "Next Steps Recommendation",
+    "meeting_prep": "Meeting Prep Brief",
 }
 
 

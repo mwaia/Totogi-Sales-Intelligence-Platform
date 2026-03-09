@@ -6,7 +6,7 @@ from sse_starlette.sse import EventSourceResponse
 
 from backend.auth import get_current_user
 from backend.database import get_db
-from backend.models import Account, AccountDocument, ChatConversation, ChatMessage, User
+from backend.models import Account, AccountBrainLift, AccountDocument, ChatConversation, ChatMessage, User
 from backend.services.document_service import get_knowledge_context, get_activity_context
 from backend.services.intelligence_service import get_intelligence_context
 from backend.schemas import ChatMessageRequest, ChatMessageResponse, ConversationCreate, ConversationResponse
@@ -130,20 +130,24 @@ async def send_message(
                 "key_contacts": account.key_contacts,
             }
 
-    # Get document and intelligence context if account-linked
+    # Get document, intelligence, and BrainLift context if account-linked
     knowledge_ctx = ""
     activity_ctx = ""
     intelligence_ctx = ""
+    brainlift_ctx = ""
     if conv.account_id:
         docs = db.query(AccountDocument).filter(AccountDocument.account_id == conv.account_id).all()
         knowledge_ctx = get_knowledge_context(docs)
         activity_ctx = get_activity_context(docs)
         intelligence_ctx = get_intelligence_context(conv.account_id, db)
+        bl = db.query(AccountBrainLift).filter(AccountBrainLift.account_id == conv.account_id).first()
+        if bl and bl.extracted_text:
+            brainlift_ctx = bl.extracted_text
 
     async def event_generator():
         full_content = ""
         try:
-            async for event in stream_chat(history, account_context, TOOLS, intelligence_context=intelligence_ctx, knowledge_context=knowledge_ctx, activity_context=activity_ctx):
+            async for event in stream_chat(history, account_context, TOOLS, intelligence_context=intelligence_ctx, knowledge_context=knowledge_ctx, activity_context=activity_ctx, brainlift_context=brainlift_ctx):
                 if event["type"] == "text":
                     full_content += event["content"]
                     yield {"event": "text", "data": json.dumps({"content": event["content"]})}

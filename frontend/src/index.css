@@ -103,144 +103,275 @@ h1, h2, h3 {
 /* ===== Enhanced Prose for AI Content ===== */
 .prose-ai {
   font-size: 0.9rem;
-  line-height: 1.75;
+  line-height: 1.8;
+  max-width: 100%;
 }
 
+/* --- Headings: clear visual hierarchy with section dividers --- */
 .prose-ai h1 {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--totogi-navy);
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--totogi-lilac);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 3px solid var(--totogi-purple);
+  letter-spacing: -0.01em;
+}
+
+.prose-ai h1:first-child {
+  margin-top: 0;
 }
 
 .prose-ai h2 {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--totogi-navy);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  background: linear-gradient(135deg, #f8f5fc 0%, #f0eaf5 100%);
+  border-left: 4px solid var(--totogi-purple);
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .prose-ai h3 {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.05rem;
   font-weight: 600;
+  color: var(--totogi-navy);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.375rem;
+  border-bottom: 1px solid var(--totogi-lilac);
+}
+
+.prose-ai h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: #374151;
   margin-top: 1.25rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.375rem;
 }
 
+/* --- Body text --- */
 .prose-ai p {
-  color: #4b5563;
-  line-height: 1.75;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  color: #374151;
+  line-height: 1.8;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
 }
 
+/* --- Lists: spaced and readable --- */
 .prose-ai ul, .prose-ai ol {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  padding-left: 1.5rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  padding-left: 1.25rem;
+}
+
+.prose-ai ul {
+  list-style: none;
+}
+
+.prose-ai ul > li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.prose-ai ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--totogi-purple);
+}
+
+.prose-ai ol > li::marker {
+  color: var(--totogi-purple);
+  font-weight: 600;
 }
 
 .prose-ai li {
-  color: #4b5563;
-  line-height: 1.65;
+  color: #374151;
+  line-height: 1.75;
+  margin-top: 0.375rem;
+  margin-bottom: 0.375rem;
+}
+
+/* Nested lists */
+.prose-ai li > ul, .prose-ai li > ol {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
 
-.prose-ai li::marker {
-  color: var(--totogi-purple);
+.prose-ai li > ul > li::before {
+  width: 5px;
+  height: 5px;
+  background-color: #c9a5e0;
 }
 
+/* --- Bold text: key terms stand out --- */
 .prose-ai strong {
   color: var(--totogi-navy);
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.prose-ai blockquote {
-  border-left: 3px solid var(--totogi-purple);
-  padding-left: 1rem;
-  margin-left: 0;
-  color: #6b7280;
-  font-style: italic;
-  background: #faf8fc;
-  padding: 0.75rem 1rem;
-  border-radius: 0 0.5rem 0.5rem 0;
-}
-
-.prose-ai code {
-  background-color: var(--totogi-lilac);
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.25rem;
-  font-size: 0.85em;
+/* Bold followed by dash pattern (e.g. **Term** — description) */
+.prose-ai li > strong:first-child {
   color: var(--totogi-purple);
 }
 
+/* --- Blockquotes: callout boxes --- */
+.prose-ai blockquote {
+  border-left: 4px solid var(--totogi-purple);
+  margin: 1rem 0;
+  margin-left: 0;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #faf7fd 0%, #f5f0f9 100%);
+  border-radius: 0 0.75rem 0.75rem 0;
+  color: #4b5563;
+  font-style: normal;
+}
+
+.prose-ai blockquote p {
+  color: #4b5563;
+  margin: 0.25rem 0;
+}
+
+.prose-ai blockquote strong {
+  color: var(--totogi-purple);
+}
+
+/* --- Inline code --- */
+.prose-ai code {
+  background-color: var(--totogi-lilac);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.85em;
+  color: var(--totogi-purple);
+  font-weight: 500;
+}
+
+/* --- Code blocks (ASCII diagrams, etc.) --- */
 .prose-ai pre {
-  background-color: var(--totogi-navy);
-  color: #e5e7eb;
-  padding: 1rem;
+  background-color: #1a1f2e;
+  color: #e2e8f0;
+  padding: 1.25rem 1.5rem;
   border-radius: 0.75rem;
   overflow-x: auto;
-  margin: 0.75rem 0;
+  margin: 1rem 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  border: 1px solid #2d3548;
 }
 
 .prose-ai pre code {
   background: none;
   color: inherit;
   padding: 0;
+  font-weight: 400;
 }
 
+/* --- Tables: professional, readable --- */
 .prose-ai table {
   width: 100%;
-  border-collapse: collapse;
-  margin: 0.75rem 0;
-  font-size: 0.875rem;
-  border-radius: 0.5rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  border-radius: 0.75rem;
   overflow: hidden;
+  border: 1px solid #e5e0eb;
+}
+
+.prose-ai thead {
+  background: linear-gradient(135deg, var(--totogi-navy) 0%, #0a2444 100%);
 }
 
 .prose-ai th {
-  background-color: var(--totogi-lilac);
   font-weight: 600;
   text-align: left;
-  padding: 0.625rem 0.75rem;
-  border-bottom: 2px solid #d6c8de;
-  color: var(--totogi-navy);
+  padding: 0.75rem 1rem;
+  color: white;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .prose-ai td {
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid #f3f0f5;
-  color: #4b5563;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f0ecf3;
+  color: #374151;
+  vertical-align: top;
 }
 
-.prose-ai tr:hover td {
+.prose-ai tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.prose-ai tbody tr:nth-child(even) td {
   background-color: #faf8fc;
 }
 
-.prose-ai hr {
-  border: none;
-  border-top: 1px solid var(--totogi-lilac);
-  margin: 1.5rem 0;
+.prose-ai tbody tr:hover td {
+  background-color: #f0ecf5;
 }
 
+/* --- Horizontal rules: section dividers --- */
+.prose-ai hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, var(--totogi-lilac), transparent);
+  margin: 2rem 0;
+}
+
+/* --- Links --- */
 .prose-ai a {
   color: var(--totogi-purple);
   text-decoration: underline;
   text-decoration-color: #c9a5e0;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
 }
 
 .prose-ai a:hover {
   color: #6b22a8;
+  text-decoration-color: var(--totogi-purple);
+}
+
+/* --- Numbered sections: visual counter --- */
+.prose-ai ol {
+  counter-reset: item;
+  list-style: none;
+}
+
+.prose-ai ol > li {
+  counter-increment: item;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.prose-ai ol > li::before {
+  content: counter(item);
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  background-color: var(--totogi-purple);
+  color: white;
+  font-size: 0.7em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ===== Toast ===== */

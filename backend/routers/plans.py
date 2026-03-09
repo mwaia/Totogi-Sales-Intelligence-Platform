@@ -6,7 +6,7 @@ from sse_starlette.sse import EventSourceResponse
 
 from backend.auth import get_current_user
 from backend.database import get_db
-from backend.models import Account, AccountDocument, AccountPlan, User
+from backend.models import Account, AccountBrainLift, AccountDocument, AccountPlan, User
 from backend.services.document_service import get_knowledge_context, get_activity_context
 from backend.services.intelligence_service import get_intelligence_context
 from backend.schemas import PlanGenerateRequest, PlanResponse
@@ -42,16 +42,20 @@ async def generate_plan(
     prompt = get_plan_prompt(body.plan_type, account.company_name)
     title = get_plan_title(body.plan_type, account.company_name)
 
-    # Get document and intelligence context
+    # Get document, intelligence, and BrainLift context
     docs = db.query(AccountDocument).filter(AccountDocument.account_id == account_id).all()
     knowledge_ctx = get_knowledge_context(docs)
     activity_ctx = get_activity_context(docs)
     intelligence_ctx = get_intelligence_context(account_id, db)
+    brainlift_ctx = ""
+    bl = db.query(AccountBrainLift).filter(AccountBrainLift.account_id == account_id).first()
+    if bl and bl.extracted_text:
+        brainlift_ctx = bl.extracted_text
 
     async def event_generator():
         full_content = ""
         try:
-            async for event in stream_plan(account_context, body.plan_type, prompt, intelligence_context=intelligence_ctx, knowledge_context=knowledge_ctx, activity_context=activity_ctx):
+            async for event in stream_plan(account_context, body.plan_type, prompt, intelligence_context=intelligence_ctx, knowledge_context=knowledge_ctx, activity_context=activity_ctx, brainlift_context=brainlift_ctx):
                 if event["type"] == "text":
                     full_content += event["content"]
                     yield {"event": "text", "data": json.dumps({"content": event["content"]})}

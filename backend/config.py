@@ -4,6 +4,7 @@ from pathlib import Path
 
 class Settings(BaseSettings):
     anthropic_api_key: str = ""
+    openai_api_key: str = ""
     jwt_secret: str = "change-me-to-a-random-32-char-string"
     database_url: str = "sqlite:///./backend/data/sales_intelligence.db"
     cors_origins: str = "http://localhost:5173"

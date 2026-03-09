@@ -19,12 +19,13 @@ async def stream_chat(
     intelligence_context: str = "",
     knowledge_context: str = "",
     activity_context: str = "",
+    brainlift_context: str = "",
 ) -> AsyncGenerator[dict, None]:
     """Stream a chat response, handling tool calls in an agentic loop.
 
     Yields dicts with keys: type ("text"|"thinking"|"tool_use"|"tool_result"|"done"), content.
     """
-    system = build_system_prompt(account_context, document_context=document_context, intelligence_context=intelligence_context, knowledge_context=knowledge_context, activity_context=activity_context)
+    system = build_system_prompt(account_context, document_context=document_context, intelligence_context=intelligence_context, knowledge_context=knowledge_context, activity_context=activity_context, brainlift_context=brainlift_context)
     working_messages = list(messages)
 
     while True:
@@ -87,9 +88,10 @@ async def stream_plan(
     intelligence_context: str = "",
     knowledge_context: str = "",
     activity_context: str = "",
+    brainlift_context: str = "",
 ) -> AsyncGenerator[dict, None]:
     """Stream a plan generation with extended thinking."""
-    system = build_system_prompt(account_context, document_context=document_context, intelligence_context=intelligence_context, knowledge_context=knowledge_context, activity_context=activity_context)
+    system = build_system_prompt(account_context, document_context=document_context, intelligence_context=intelligence_context, knowledge_context=knowledge_context, activity_context=activity_context, brainlift_context=brainlift_context)
 
     with client.messages.stream(
         model=MODEL,

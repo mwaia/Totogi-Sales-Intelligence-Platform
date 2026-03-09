@@ -52,14 +52,16 @@ Layered Python FastAPI app:
 - **`main.py`** — App init, CORS, router registration, DB table creation on startup
 - **`config.py`** — Pydantic BaseSettings loading from env vars
 - **`database.py`** — SQLAlchemy engine (SQLite with WAL mode, foreign keys enabled)
-- **`models.py`** — ORM models: User, Account, AccountPlan, NewsItem, ChatConversation, ChatMessage
+- **`models.py`** — ORM models: User, Account, AccountPlan, NewsItem, ChatConversation, ChatMessage, IntelligenceBrief, AccountDocument
 - **`schemas.py`** — Pydantic request/response validation
 - **`auth.py`** — JWT token generation/verification, password hashing (bcrypt)
-- **`routers/`** — API endpoints (all prefixed `/api/`): auth, accounts, chat, plans, news
+- **`routers/`** — API endpoints (all prefixed `/api/`): auth, accounts, chat, plans, news, intelligence, documents
 - **`services/`** — Business logic:
   - `ai_service.py` — Core agentic loop: streams Claude responses, handles tool calls iteratively until complete. Uses `claude-opus-4-6` with `thinking: {"type": "adaptive"}`
   - `plan_service.py` — Prompt templates for plan types (full plan, use cases, messaging, stakeholder map, deal strategy, beachhead)
   - `news_service.py` — News aggregation orchestration
+  - `intelligence_service.py` — AI-generated intelligence briefs per account
+  - `document_service.py` — File upload/extraction (PDF, DOCX, text) for account documents
 - **`tools/`** — AI function-calling tools: `web_search` (DuckDuckGo), `scrape_url` (BeautifulSoup), `search_account_news`
 - **`brainlift/`** — Sales methodology knowledge base:
   - `loader.py` — Parses `BSS_Magic_Sales_BrainLift.docx` (cached after first load)
@@ -70,7 +72,7 @@ React 19 + TypeScript + Vite + Tailwind CSS:
 - **`api.ts`** — Centralized API client with JWT auth, auto-redirect on 401. Streaming endpoints (plans, chat) use raw `fetch` for SSE
 - **`types.ts`** — Shared TypeScript interfaces
 - **`pages/`** — Route components: Login, Dashboard, AccountList, AccountNew, AccountDetail, ChatPage
-- **`components/`** — Layout, ChatPanel, PlanSection, NewsSection
+- **`components/`** — Layout, ChatPanel, PlanSection, NewsSection, IntelligenceSection, DocumentSection
 - **`hooks/`** — Custom React hooks
 
 ### Key Patterns

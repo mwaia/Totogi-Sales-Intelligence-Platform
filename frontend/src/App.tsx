@@ -7,6 +7,7 @@ import AccountList from "./pages/AccountList";
 import AccountNew from "./pages/AccountNew";
 import AccountDetail from "./pages/AccountDetail";
 import ChatPage from "./pages/ChatPage";
+import TeamPage from "./pages/TeamPage";
 
 function App() {
   const { user, loading, login, logout, isAuthenticated } = useAuth();
@@ -32,6 +33,7 @@ function App() {
           <Route path="/accounts/new" element={<AccountNew />} />
           <Route path="/accounts/:id" element={<AccountDetail />} />
           <Route path="/chat" element={<ChatPage />} />
+          <Route path="/team" element={<TeamPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>

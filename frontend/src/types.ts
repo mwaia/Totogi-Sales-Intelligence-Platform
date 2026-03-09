@@ -23,6 +23,7 @@ export interface Account {
   employee_count: string;
   annual_revenue: string;
   current_status: string;
+  deal_value: number;
   notes: string;
   key_contacts: Contact[];
   owner_id: number | null;
@@ -86,6 +87,168 @@ export const INTELLIGENCE_CATEGORIES: Record<string, { label: string; color: str
   technology_initiative: { label: "Technology", color: "bg-teal-100 text-teal-700" },
 };
 
+export interface Deal {
+  id: number;
+  account_id: number;
+  title: string;
+  description: string;
+  current_status: string;
+  deal_value: number;
+  created_by_id: number | null;
+  created_by_name: string | null;
+  created_at: string;
+  updated_at: string;
+  task_count: number;
+  open_task_count: number;
+}
+
+export interface AccountBrainLift {
+  id: number;
+  account_id: number;
+  original_filename: string;
+  file_size: number;
+  mime_type: string;
+  has_extracted_text: boolean;
+  text_preview: string;
+  uploaded_by_id: number | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AccountTask {
+  id: number;
+  deal_id: number;
+  account_id: number;
+  title: string;
+  description: string;
+  due_date: string | null;
+  status: "todo" | "in_progress" | "done";
+  priority: "low" | "medium" | "high";
+  assigned_to_id: number | null;
+  assigned_to_name: string | null;
+  created_by_id: number | null;
+  created_by_name: string | null;
+  deal_title: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AccountNote {
+  id: number;
+  account_id: number;
+  content: string;
+  created_by_id: number | null;
+  created_by_name: string | null;
+  created_at: string;
+}
+
+export interface DashboardData {
+  brainlift: {
+    id: number;
+    original_filename: string;
+    file_size: number;
+    has_extracted_text: boolean;
+    text_preview: string;
+    created_at: string;
+  } | null;
+  deals: {
+    id: number;
+    title: string;
+    description: string;
+    current_status: string;
+    deal_value: number;
+    health_score: number;
+    health_signals: { text: string; type: "positive" | "negative" | "warning" }[];
+    task_count: number;
+    open_task_count: number;
+    updated_at: string | null;
+  }[];
+  is_stale: boolean;
+  days_inactive: number;
+  next_actions: {
+    priority: "high" | "medium" | "low";
+    text: string;
+    action: string;
+  }[];
+  activity_timeline: {
+    type: "note" | "task_done" | "document" | "artifact";
+    text: string;
+    by: string | null;
+    at: string | null;
+  }[];
+  recent_notes: {
+    id: number;
+    content: string;
+    created_by_name: string | null;
+    created_at: string;
+  }[];
+  upcoming_tasks: {
+    id: number;
+    title: string;
+    due_date: string | null;
+    status: string;
+    priority: string;
+    assigned_to_name: string | null;
+  }[];
+  recent_news: {
+    id: number;
+    title: string;
+    url: string;
+    summary: string;
+    category: string;
+    scraped_at: string;
+  }[];
+  intelligence: {
+    summary: string;
+    key_highlights: { text: string; category: string; signal_type: string }[];
+    risk_signals: { text: string; severity: string }[];
+    opportunity_signals: { text: string; priority: string }[];
+    generated_at: string;
+  } | null;
+}
+
+export interface PipelineSummary {
+  stages: Record<string, { count: number; value: number; weighted: number }>;
+  total_pipeline: number;
+  total_weighted: number;
+  total_deals: number;
+  stale_deals: {
+    id: number;
+    account_id: number;
+    company_name: string;
+    deal_title: string;
+    status: string;
+    deal_value: number;
+    days_inactive: number;
+  }[];
+}
+
+export interface ResearchReport {
+  id: number;
+  account_id: number;
+  query: string;
+  report_type: "deep_research" | "web_search";
+  content: string;
+  citations: { title: string; url: string }[];
+  model_used: string;
+  created_at: string;
+}
+
+export interface SimilarityResult {
+  content: string;
+  score: number;
+  document_id: number;
+  original_filename: string;
+  chunk_index: number;
+}
+
+export interface EmbeddingStatus {
+  document_id: number;
+  original_filename: string;
+  chunk_count: number;
+  is_embedded: boolean;
+}
+
 export interface Conversation {
   id: number;
   account_id: number | null;
@@ -120,7 +283,8 @@ export type PlanType =
   | "qbr_brief"
   | "expansion_plan"
   | "land_expand"
-  | "next_steps";
+  | "next_steps"
+  | "meeting_prep";
 
 export const PLAN_TYPE_LABELS: Record<PlanType, string> = {
   full: "Full Account Plan",
@@ -139,6 +303,7 @@ export const PLAN_TYPE_LABELS: Record<PlanType, string> = {
   expansion_plan: "Account Expansion Plan",
   land_expand: "Land & Expand Strategy",
   next_steps: "Next Steps",
+  meeting_prep: "Meeting Prep Brief",
 };
 
 export interface ArtifactCategory {
@@ -157,7 +322,7 @@ export const ARTIFACT_CATEGORIES: ArtifactCategory[] = [
   },
   {
     label: "Review & Analysis",
-    types: ["win_loss_analysis", "qbr_brief"],
+    types: ["win_loss_analysis", "qbr_brief", "meeting_prep"],
   },
 ];
 

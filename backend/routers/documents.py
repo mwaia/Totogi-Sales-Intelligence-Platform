@@ -7,7 +7,7 @@ from backend.database import get_db
 from backend.models import Account, AccountDocument, User
 from backend.schemas import DocumentResponse
 from backend.services.document_service import save_file, delete_file, extract_text
-from backend.config import DATA_DIR
+from backend.config import DATA_DIR, settings
 
 router = APIRouter(tags=["documents"])
 
@@ -47,6 +47,14 @@ async def upload_document(
     db.add(doc)
     db.commit()
     db.refresh(doc)
+
+    # Auto-embed if OpenAI key is configured
+    if settings.openai_api_key and extracted:
+        try:
+            from backend.services.embedding_service import embed_document
+            embed_document(doc, db)
+        except Exception:
+            pass  # Embedding is best-effort; don't fail the upload
 
     return _to_response(doc)
 
@@ -96,6 +104,14 @@ def delete_document(
     doc = db.query(AccountDocument).filter(AccountDocument.id == doc_id).first()
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
+
+    # Clean up embedding chunks
+    if settings.openai_api_key:
+        try:
+            from backend.services.embedding_service import delete_document_chunks
+            delete_document_chunks(doc.id, db)
+        except Exception:
+            pass
 
     delete_file(doc.file_path)
     db.delete(doc)
